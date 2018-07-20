@@ -62,5 +62,5 @@ Basic project to experiment with TDD in Angular 6.
             `should compile`  
         - The spec is failing for the same reasons as app module,  no imports. hmm. let's try adding appModule to the imports for the SideNavigationComponent
             - importing app module gives us a failure that we've imported the same member twice.  damn. 
-        - 
+        - So, I went ahead and added the same imports into the SideNavigationComponet as I added to the AppComponent and now 3 tests run and 3 tests pass.  But there's a lot of importing going on.  I don't like it.  Lets see what I can do to get rid of all of this duplication of imports. 
             
