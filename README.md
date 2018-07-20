@@ -29,4 +29,15 @@ Basic project to experiment with TDD in Angular 6.
             `should render title in a h1 tag`  
         `SideNavigationComponent`  
             `should compile`  
-        -
+2. Let's at least our pile of nothing testing right, right?
+    - The whole  `should render title in a h1 tag`  was stupid.  I deleted it. 3 specs, 1 failture
+        - I deleted all but from the app component template`<router-outlet></router-outlet>`
+    - lets unfuck the fuckery of the 'should compile of the SideNavigationComponent
+        - huh? 'mat-toolbar' is not a known element:  , okay the generator must have not generated enough to actually run what it generated.
+            - mat-nav-list ? 
+            - mat-icon ?
+        - checked the app module,  it's all being importing in there.   let's try an ng build?
+        
+        there it is, `ERROR in src/app/app.module.ts(7,32): error TS2307: Cannot find module './my-nav/my-nav.component'. ` , I built the side nav and then deleted it.  Looks like I forgot the reference.   Yup, it's still in the app import and the declartions of the app module.  
+    - still at 3 Specs , 1 Fail
+    - too test my sanity, `ng build` builds correctly
