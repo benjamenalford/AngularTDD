@@ -40,4 +40,27 @@ Basic project to experiment with TDD in Angular 6.
         
         there it is, `ERROR in src/app/app.module.ts(7,32): error TS2307: Cannot find module './my-nav/my-nav.component'. ` , I built the side nav and then deleted it.  Looks like I forgot the reference.   Yup, it's still in the app import and the declartions of the app module.  
     - still at 3 Specs , 1 Fail
-    - too test my sanity, `ng build` builds correctly
+    - to test my sanity, `ng build` builds correctly
+    - I added <app-side-navigation> to the app component , ran `ng serve` and everything works. All test fail now. 3 specs, 3 test, 3 failures. 
+        `AppComponent`  
+            `should create the app`  
+            `should have as title 'app'`  
+        `SideNavigationComponent`  
+            `should compile`  
+    - Let's start with the app component test. 
+        - The test has module imports,  it's not importing any of the modules needed for Material Design, even though they are all included in the app module.  
+        I've imported these into the app component spec:
+                `MatToolbarModule`  
+                `MatButtonModule`  
+                `MatSidenavModule`  
+                `MatIconModule`  
+                `MatListModule`   
+                `BrowserAnimationsModule`  
+                - it would make more sense to just import the app module here, since they are already in.  We'll get back to that. lets get this guy running first
+    - This got us to 1 failure: 
+        `SideNavigationComponent`  
+            `should compile`  
+        - The spec is failing for the same reasons as app module,  no imports. hmm. let's try adding appModule to the imports for the SideNavigationComponent
+            - importing app module gives us a failure that we've imported the same member twice.  damn. 
+        - 
+            

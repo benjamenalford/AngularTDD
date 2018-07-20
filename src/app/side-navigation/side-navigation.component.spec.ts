@@ -1,7 +1,8 @@
-
-import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { MatSidenavModule } from '@angular/material/sidenav';
+
 import { SideNavigationComponent } from './side-navigation.component';
+
 
 describe('SideNavigationComponent', () => {
   let component: SideNavigationComponent;
@@ -12,7 +13,7 @@ describe('SideNavigationComponent', () => {
       imports: [MatSidenavModule],
       declarations: [SideNavigationComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SideNavigationComponent);
     component = fixture.componentInstance;
