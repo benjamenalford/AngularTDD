@@ -5,11 +5,9 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
+  getAppTitle() {
+    // tslint:disable-next-line:max-line-length
     return element(by.css('body > app-root > app-side-navigation > mat-sidenav-container > mat-sidenav-content > mat-toolbar > span')).getText();
   }
 
-  getHeaderTest() {
-    return element(by.tagName('span'));
-  }
 }
