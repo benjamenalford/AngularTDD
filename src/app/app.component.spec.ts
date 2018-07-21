@@ -1,15 +1,8 @@
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-  MatButtonModule,
-  MatIconModule,
-  MatListModule,
-  MatSidenavModule,
-  MatToolbarModule,
-} from '../../node_modules/@angular/material';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 
 describe('AppComponent', () => {
@@ -17,12 +10,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        BrowserAnimationsModule
+        SharedModule
       ],
       declarations: [
         AppComponent,

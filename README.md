@@ -62,5 +62,38 @@ Basic project to experiment with TDD in Angular 6.
             `should compile`  
         - The spec is failing for the same reasons as app module,  no imports. hmm. let's try adding appModule to the imports for the SideNavigationComponent
             - importing app module gives us a failure that we've imported the same member twice.  damn. 
-        - So, I went ahead and added the same imports into the SideNavigationComponet as I added to the AppComponent and now 3 tests run and 3 tests pass.  But there's a lot of importing going on.  I don't like it.  Lets see what I can do to get rid of all of this duplication of imports. 
+        - So, I went ahead and added the same imports into the SideNavigationComponet as I added to the AppComponent and now 3 tests run and 3 tests pass.  But there's a lot of importing going on.  I don't like it.  Lets see what I can do to get rid of all of this duplication of imports.
             
+3. duplicating the imports in all this is going to be a pain in the ass. 
+    - a quick dive into the documentation of Karma, implementing a shared module is the way to go. I created a new component using the schematics -`ng g module shared`   
+    - lets see if that worked? `ng test` Snap 4 specs, 0 fails.  At least this schmatic didn't generate it's own failing test? or is starting with a failing test the right thing to do?    
+    - Imported shared into the AppModule and add these to the import in shared.module  
+        `BrowserAnimationsModule,`  
+        `LayoutModule,`  
+        `MatToolbarModule,`  
+        `MatButtonModule,`  
+        `MatSidenavModule,`  
+        `MatIconModule,`  
+        `MatListModule`  
+    - saved both and the tests still pass 4 , 4
+    - `ng build` still works
+    - `ng e2e` 1 test and 1 failure. hold up, we'll get back to that. 
+    - in AppComponent is swapped out the module imports to the shared module, 4 specs , 2 failing ,per usual the build still works though. failures are the appComponent failures.  Added the modules that I just deleted out , back in with the new ShareModule as well.  4 specs, 4 passes 
+    - what's this even look like ? `ng serve`  bulid runs, white screen. Dev tools gives [] me the same error the failing tests gave me before I fixed them. noted
+    - Ok , so I added everything back to the AppModule.  I must not be sharing the shared module right.  ohhh, the documentation says to export what I shared. My Bad. 
+    - in SharedModule I added:
+      `, exports: [`  
+        `BrowserAnimationsModule,`  
+        `LayoutModule,`  
+        `MatToolbarModule,`  
+        `MatButtonModule,`    
+        `MatSidenavModule,`  
+        `MatIconModule,`  
+        `MatListModule`    
+        `],`  
+    - and then removed those from the App Component Spec. 4, 4 tests and it displays the site.  coolness, but the karma output page looks like crap, tabling.
+    - removed the above imports and brought the shared module into the side navigation. 
+    - so 4 , 4 passing still and the site works. with karma being ugly. sidetracking to see if that's fixable.
+    
+    
+                    
