@@ -6,6 +6,10 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+    return element(by.css('body > app-root > app-side-navigation > mat-sidenav-container > mat-sidenav-content > mat-toolbar > span')).getText();
+  }
+
+  getHeaderTest() {
+    return element(by.tagName('span'));
   }
 }

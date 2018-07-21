@@ -94,6 +94,16 @@ Basic project to experiment with TDD in Angular 6.
     - and then removed those from the App Component Spec. 4, 4 tests and it displays the site.  coolness, but the karma output page looks like crap, tabling.
     - removed the above imports and brought the shared module into the side navigation. 
     - so 4 , 4 passing still and the site works. with karma being ugly. sidetracking to see if that's fixable.
+    - thanks google. so the census is that I need to include the theme / css into the karma config.  oh, it's there .  neat.  Nothing shows up wrong in the chrome console. I checked and all js files match what's coming down in the ng serve'd up version that still works and nada.   Best guess is that it's not initializing something.
+    - all right, googling isn't really even giving me anything to futz with. some tinker hacking hasn't improved or made the karma page to display any better, so before I call it quits for the day, I'll look at the e2e test and see if I can at least leave this with the app and both test suites running and passing all the built in tests. 
+    - looks like e2e testing is set up in app.e2e-spec.ts and app.po.ts holds the apps config and some helper functions.  it was looking for that default angular welcome message.   I started up the site and right clicked on the header title, inspected tbe element, right clicked on the element in the html view and chose copy > copy selector command and then, in app.po.ts changed getParagraphText to:   
+    `return element(by.css('body > app-root > app-side-navigation > mat-sidenav-container > mat-sidenav-content > mat-toolbar > span')).getText();`   
+    and changed the name of getParagraphText to getAppTitle 
+    - in app.e2e-spec.ts I changed the test should 'display welcome message' to 'should display app title in header' and it's test to `expect(page.getAppTitle()).toEqual('TestFirst');`
+    - `ng e2e` runs now and my lonely header test passes. 
+    - `ng serve` works and serves the page
+    - `ng test` runs and passes all tests, but the page doesn't render properly in the Kara Test browser page.  
+    - back to seeing about geting ng test to show the site right
     
     
                     
