@@ -104,6 +104,50 @@ Basic project to experiment with TDD in Angular 6.
     - `ng serve` works and serves the page
     - `ng test` runs and passes all tests, but the page doesn't render properly in the Kara Test browser page.  
     - back to seeing about geting ng test to show the site right
-    
+4. So lets take a step back here.  The original goal was to do a tutorial and some experimentation w/ Angular 6 & Materual design. **But, It's broken out of the fucking box.** My google fu has either turned to complete shit, I'm a worthless hack, or I'm just doing something wrong.  I'm not finding much on this tool chain ( the built-in , I must add) but it DOES look like the folks at angular material have their shit together but they aren't using the standard Karma config and are manually importing a bunch of crap.  Honestly, I need to sit and analyze it all further, I'm 99% sure that it's something not getting bootstrapped into Karma/ Jasmine / Whatever, but I'm on a plane with no internet access and want to keep this ball rolling.  soooooo, let's test some shit. 
+    - ok, so I've got no internet access and no documentation.  So this is an exercise in hacking and brute forceing along with a but of 'intellisense until it works' ( patent pending fuckers). So what's this going to do ???  No external APIs,  I don't want to go through all the effort to spin up a DNC WebAPI Project, so I'm going to start stubbing out an Anglular version of the Koei Corp's classic Aerobiz / Aerobiz Supersonic.  I do happen to have a copy of the instruction manual with me so we're gonna futz through this. 
+    - WTF is Aerobiz? I played the hell out of this when it came out for the SNES and it's awesome and you're not for not playing it. From the manual:
+        `Aerobiz Supersonic is a unique business simulation which lets you take part in the chllenging world of global travel. The challenge extends from early airline history into the coming supersonic era beyond the year 2000.  The game features over 50 airplanes, including supersonic jets, and 89 worldwide cities for your air network. `   
+        
+        So really, you're the CEO of this airline and want to whore your capitalist ass out and take over the industry.  Let's look at the manual some more  .
+        
+        - Game Flow 
+            - Prepare to open new routes
+                1. hold board meeting
+                2. acquire slots @ an airport
+                3. purchase airplanes. 
+                4. improve facilities
+            - open new regional routes
+                1. open new inter-regional reotures and build hubs
+                1. expand routes into new regions
+                    - purchase buisnesses
+                    - run advertising campaigns
+            - GOAL - meet year-end victory conditions   
+        
+        Really that's the gist of it.  so from the a quick look we're gonna need some planes and place to land and take off.  we'll dive into the simulation later.  The manual has enough information to probably get most of this up and going.   
+          
+        Like I said before,  unit testing with Material and Angular is wonky at best right now.  it works but isn't quite what it should be.  i'm going to get back to that later.  totally promise, just need to be figure out Karma / Jasmine's config and find what it's missing.    
+        
+        - After all that long winded crap. let's get back into TDD with Angular, caveats noted. 
+        - We need planes.  Looking at the manual, there's a table of planes in the appendix.  Planes are have the following attributes ( in the manual)
+            - Plane
+                - Manufacturer      - The table uses a manufactor ID ( T= Tupolev ( Russia), B=Boing (U.S.) ,etc.)   
+                - Name              - Model name of the plane
+                - Seats             - seats, int
+                - Range ( Miles )   - range of plane in miles, int. 
+                - Price ( US $1k )  - price, int
+                Reading further into the manual, in the planes section, we see that there are some items left out of the Planes section in the appendix. So we're going to have to do figure this out. But the screen fields are :
+                - Fuel Efficiency - `a plane with high fuel efficiency (80) can fly twice as far with the same amount of fuel as a plane with low fuel effciency ( 40). This translates into reduced Costs per flight aand increased profifts for your airline.   
+                - Maintenance - ease of maintenance, Higher means the plane will not need frequent repairs, this less money is needed. 
+                - start of production - year - the year it started production.  Depending on what year you start your game in defines what planes are available.      
+                
+                Something that they don't mention is that if you can choose where you by planes from, so if you are America or Russia during the cold war you can't by eastern or western block planes during that time. 
+                
+            - The gives us a pretty good start on what our base plane model should look like, so lets generate the model and have Angualr create it's default spec for us.    
+            `ng generate class models/plane`
+            - that ~mostly~ did what I wanted but it didn't generate a spec file. but that's okay. I think it should but I'm sure that they think the component or the service should be the one with the model logic being tested, and that the classes are just supposed to be dumb classes. 
+            - I think that TDD kind of breaks down if we're relying on 'dumb' models that can't be tested.  There is probably an argument that a model isn't a class. I'll look into that, but there's no schematic for a model just for class. 
+            
+        
     
                     
