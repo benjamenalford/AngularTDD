@@ -136,18 +136,45 @@ Basic project to experiment with TDD in Angular 6.
                 - Seats             - seats, int
                 - Range ( Miles )   - range of plane in miles, int. 
                 - Price ( US $1k )  - price, int
-                Reading further into the manual, in the planes section, we see that there are some items left out of the Planes section in the appendix. So we're going to have to do figure this out. But the screen fields are :
+                   Reading further into the manual, in the planes section, we see that there are some items left out of the Planes section in the appendix. So we're going to have to do figure this out. But the screen fields are :
                 - Fuel Efficiency - `a plane with high fuel efficiency (80) can fly twice as far with the same amount of fuel as a plane with low fuel effciency ( 40). This translates into reduced Costs per flight aand increased profifts for your airline.   
                 - Maintenance - ease of maintenance, Higher means the plane will not need frequent repairs, this less money is needed. 
                 - start of production - year - the year it started production.  Depending on what year you start your game in defines what planes are available.      
                 
                 Something that they don't mention is that if you can choose where you by planes from, so if you are America or Russia during the cold war you can't by eastern or western block planes during that time. 
                 
-            - The gives us a pretty good start on what our base plane model should look like, so lets generate the model and have Angualr create it's default spec for us.    
-            `ng generate class models/plane`
-            - that ~mostly~ did what I wanted but it didn't generate a spec file. but that's okay. I think it should but I'm sure that they think the component or the service should be the one with the model logic being tested, and that the classes are just supposed to be dumb classes. 
-            - I think that TDD kind of breaks down if we're relying on 'dumb' models that can't be tested.  There is probably an argument that a model isn't a class. I'll look into that, but there's no schematic for a model just for class. 
-            
+        - The gives us a pretty good start on what our base plane model should look like, so lets generate the model and have Angualr create it's default spec for us.    
+        `ng generate class models/plane --spec`   
+        We there , we got a spec and a class in a new models directory
         
+        - tested and yes it compiles. so joyous day. let's start building this plane. 
+    5.  Starting with a model 
+         From here on out I'm just going to leave `ng test` running and we'll hack this fucking plane together.  From my little table up there, we can see what attributes that we should have available to us.  I'll be doing hidden properties with getter and setters methods for everything.  So let's try this 'TDD /  Test first now that we've got a project going.  
+         I'm diving right into the plane.spec.ts file.  First we're going to write up some broken ass tests.  
+         it gave us a simple test 'it should create'  , I concur, so I'm not changing that, but I am curious how that's going to work with inheritance later. we'll see when we get there. 
+         
+         - So we can use our base test to define a new test.  Looking at this we can see that we are describing the object, creating a lambda that's return is boolean  ( `expect(new Plane().toBeTruthy());`) pretty simple. 
+         
+         - I created a simple test case, that should fail :  
+           ` describe('Plane', () => {`  
+                `it('should create plane named DC-10', () => {`  
+                   ` expect(new Plane().name = 'DC-10').toEqual('DC-10');`  
+                `});`  
+              `  });`  
+        - since we left ng test running we can see that this test indeed fails. 
+        - Now let's make this a passing test. 
+        - using the prop keyword in VSCode,  in the plane class, I created a property name nad It's generate the getter and setter for me.
+        - now it's showing me a passing test, woot
+        - Right now i'm seeing one issue that I'm going to get irrated with though,  I'm having to create a new Plane each damn time.   Let's see if there is a way to set something up to run before each test runs.
+        - we'll use the 'before and after' function to create a test bed that wil run before each test. 
+        
+
+         
+         
+         
+         
+        
+        
+
     
                     
