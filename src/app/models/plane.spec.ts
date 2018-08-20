@@ -1,6 +1,7 @@
 import { Plane } from './plane';
 
 
+let plane: Plane;
 
 describe('before & after', function () {
   beforeEach(function () {

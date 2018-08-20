@@ -163,10 +163,36 @@ Basic project to experiment with TDD in Angular 6.
               `  });`  
         - since we left ng test running we can see that this test indeed fails. 
         - Now let's make this a passing test. 
-        - using the prop keyword in VSCode,  in the plane class, I created a property name nad It's generate the getter and setter for me.
+        - using the prop keyword in VSCode,  in the plane class, I created a property name and It generates the getter and setter for me.
         - now it's showing me a passing test, woot
         - Right now i'm seeing one issue that I'm going to get irrated with though,  I'm having to create a new Plane each damn time.   Let's see if there is a way to set something up to run before each test runs.
         - we'll use the 'before and after' function to create a test bed that wil run before each test. 
+            - first I created a global plane variable of Plane() type
+            - next I created our setup before and after function which will run before each test. It all looks like this:  
+           `let plane: Plane;`  
+                `describe('before & after', function () {`
+                `beforeEach(function () {`
+                    `plane = new Plane();`
+                `});`
+                `afterEach(function () {`
+                `// clean up`
+                `});`
+                `});`
+                `describe('Plane', () => {`
+               `it('should create an instance', () => {`
+                   `expect(new Plane()).toBeTruthy();`
+               `});`
+              `});`
+                `describe('Plane', () => {`
+                `it('should create plane named DC-10', () => {`
+                `  expect(new Plane().name = 'DC-10').toEqual('DC-10');`
+                ` });`
+                `});`
+        - there, that's a little better. So now each test will create run it's set up and break down first.
+        
+    6. Before 
+        
+        
         
 
          
