@@ -16,7 +16,6 @@ export class Plane {
         this._price = v;
     }
 
-
     public get productionYear(): string {
         return this._productionYear;
     }
@@ -58,7 +57,6 @@ export class Plane {
     public set seats(v: number) {
         this._seats = v;
     }
-
 
     public get name(): string {
         return this._name;

@@ -141,7 +141,7 @@ Basic project to experiment with TDD in Angular 6.
                 - Maintenance - ease of maintenance, Higher means the plane will not need frequent repairs, this less money is needed. 
                 - start of production - year - the year it started production.  Depending on what year you start your game in defines what planes are available.      
                 
-                Something that they don't mention is that if you can choose where you by planes from, so if you are America or Russia during the cold war you can't by eastern or western block planes during that time. 
+                Something that they don't mention is that you can choose where you by planes from, so if you are America or Russia during the cold war you can't by eastern or western block planes during that time. 
                 
         - The gives us a pretty good start on what our base plane model should look like, so lets generate the model and have Angualr create it's default spec for us.    
         `ng generate class models/plane --spec`   
@@ -194,3 +194,45 @@ Basic project to experiment with TDD in Angular 6.
         - First I created the tests for: seats, range, fuel effciency, production year,price, and maintenance,  while running NgTest in the background.  I can see each test fail as I write them. 
         - Once I have finished creating the tests, I'll go into the plane class and use the prop keyword to build my properties one by one until each test passes
         - The tests and the model are all simple.  We have no logic in the model nor do we test for anything other than values.  
+    7. SOOOO, I fucked up.  I didn't do my test set up and break down correctly. ` expect(plane).toBeTruthy();` I expected to work since in the setup, i'm creating a new Plane() and assigning to plane. turns out that this isn't working.  It turns out that this is scoped to the current describe block, so I've left this intact BUT i've changed my global to `let plane: Plane = new Plane();`  While this gets one object set up and then runs it's tests, I probably should have one test to check for the base plane object creation and have it's set up and tear down inside of it. 
+    
+    So I undid that change to create the global and then moved all the test cases into the main create plane describe block as such:  
+            `describe('Create Plane', () => {`  
+        `let plane: Plane;`  
+        `beforeAll(function () {`  
+            `plane = new Plane();`  
+        `});`  
+        `it('should create an instance', () => {`  
+            `expect(plane).toBeTruthy();`  
+        `});`  
+        `it('should create plane named DC-10', () => {`  
+            `expect(plane.name = 'DC-10').toEqual('DC-10');`  
+        `});`  
+        `it('should create plane with manufacturer Boeing', () => {`  
+            `expect(plane.manufacturer = 'Boeing').toEqual('Boeing');`  
+        `});`  
+        `it('should create plane with 10 seats', () => {`  
+            `expect(plane.seats = 10).toEqual(10);`  
+        `});`  
+        `it('should create plane with a range of 1000 miles', () => {`  
+            `expect(plane.range = 1000).toEqual(1000);`  
+        `});`  
+        `it('should create plane with a fuel efficiency of 0', () => {`  
+            `expect(plane.fuelEfficiency = 0).toEqual(0);`  
+        `});`  
+        `it('should create plane with a maintenance rating of 0', () => {`  
+            `expect(plane.maintenance = 0).toEqual(0);`  
+        `});`  
+        `it('should create plane with a production year of 1980', () => {`  
+            `expect(plane.productionYear = '1980').toEqual('1980');`  
+        `});`  
+        `it('should create plane with a price > 1.00', () => {`  
+            `expect(plane.price = 2).toBeGreaterThan(1.00);`  
+        `});`  
+        `});`  
+        
+        So now it's all packed together with a single setup for the plane and then tests the base properties inside the plane.  whew, starting to look cleaner. 
+        
+
+    
+    
