@@ -190,17 +190,7 @@ Basic project to experiment with TDD in Angular 6.
                 `});`
         - there, that's a little better. So now each test will create run it's set up and break down first.
         
-    6. Before 
-        
-        
-        
-
-         
-         
-         
-         
-        
-        
-
-    
-                    
+    6.  Okay, so there's a test and a test model now. I'm going to plug through the Aerobiz manual and fill out the rest of the tests for this. 
+        - First I created the tests for: seats, range, fuel effciency, production year,price, and maintenance,  while running NgTest in the background.  I can see each test fail as I write them. 
+        - Once I have finished creating the tests, I'll go into the plane class and use the prop keyword to build my properties one by one until each test passes
+        - The tests and the model are all simple.  We have no logic in the model nor do we test for anything other than values.  
