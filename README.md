@@ -148,91 +148,87 @@ Basic project to experiment with TDD in Angular 6.
         We there , we got a spec and a class in a new models directory
         
         - tested and yes it compiles. so joyous day. let's start building this plane. 
-    5.  Starting with a model 
-         From here on out I'm just going to leave `ng test` running and we'll hack this fucking plane together.  From my little table up there, we can see what attributes that we should have available to us.  I'll be doing hidden properties with getter and setters methods for everything.  So let's try this 'TDD /  Test first now that we've got a project going.  
-         I'm diving right into the plane.spec.ts file.  First we're going to write up some broken ass tests.  
-         it gave us a simple test 'it should create'  , I concur, so I'm not changing that, but I am curious how that's going to work with inheritance later. we'll see when we get there. 
-         
-         - So we can use our base test to define a new test.  Looking at this we can see that we are describing the object, creating a lambda that's return is boolean  ( `expect(new Plane().toBeTruthy());`) pretty simple. 
-         
-         - I created a simple test case, that should fail :  
-           ` describe('Plane', () => {`  
-                `it('should create plane named DC-10', () => {`  
-                   ` expect(new Plane().name = 'DC-10').toEqual('DC-10');`  
-                `});`  
-              `  });`  
-        - since we left ng test running we can see that this test indeed fails. 
-        - Now let's make this a passing test. 
-        - using the prop keyword in VSCode,  in the plane class, I created a property name and It generates the getter and setter for me.
-        - now it's showing me a passing test, woot
-        - Right now i'm seeing one issue that I'm going to get irrated with though,  I'm having to create a new Plane each damn time.   Let's see if there is a way to set something up to run before each test runs.
-        - we'll use the 'before and after' function to create a test bed that wil run before each test. 
-            - first I created a global plane variable of Plane() type
-            - next I created our setup before and after function which will run before each test. It all looks like this:  
-           `let plane: Plane;`  
-                `describe('before & after', function () {`
-                `beforeEach(function () {`
-                    `plane = new Plane();`
-                `});`
-                `afterEach(function () {`
-                `// clean up`
-                `});`
-                `});`
-                `describe('Plane', () => {`
-               `it('should create an instance', () => {`
-                   `expect(new Plane()).toBeTruthy();`
-               `});`
-              `});`
-                `describe('Plane', () => {`
-                `it('should create plane named DC-10', () => {`
-                `  expect(new Plane().name = 'DC-10').toEqual('DC-10');`
-                ` });`
-                `});`
-        - there, that's a little better. So now each test will create run it's set up and break down first.
+5.  Starting with a model 
+        From here on out I'm just going to leave `ng test` running and we'll hack this fucking plane together.  From my little table up there, we can see what attributes that we should have available to us.  I'll be doing hidden properties with getter and setters methods for everything.  So let's try this 'TDD /  Test first now that we've got a project going.  
+        I'm diving right into the plane.spec.ts file.  First we're going to write up some broken ass tests.  
+        it gave us a simple test 'it should create'  , I concur, so I'm not changing that, but I am curious how that's going to work with inheritance later. we'll see when we get there. 
         
-    6.  Okay, so there's a test and a test model now. I'm going to plug through the Aerobiz manual and fill out the rest of the tests for this. 
-        - First I created the tests for: seats, range, fuel effciency, production year,price, and maintenance,  while running NgTest in the background.  I can see each test fail as I write them. 
-        - Once I have finished creating the tests, I'll go into the plane class and use the prop keyword to build my properties one by one until each test passes
-        - The tests and the model are all simple.  We have no logic in the model nor do we test for anything other than values.  
-    7. SOOOO, I fucked up.  I didn't do my test set up and break down correctly. ` expect(plane).toBeTruthy();` I expected to work since in the setup, i'm creating a new Plane() and assigning to plane. turns out that this isn't working.  It turns out that this is scoped to the current describe block, so I've left this intact BUT i've changed my global to `let plane: Plane = new Plane();`  While this gets one object set up and then runs it's tests, I probably should have one test to check for the base plane object creation and have it's set up and tear down inside of it. 
-    
-    So I undid that change to create the global and then moved all the test cases into the main create plane describe block as such:  
-            `describe('Create Plane', () => {`  
+        - So we can use our base test to define a new test.  Looking at this we can see that we are describing the object, creating a lambda that's return is boolean  ( `expect(new Plane().toBeTruthy());`) pretty simple. 
+        
+        - I created a simple test case, that should fail :  
+        ` describe('Plane', () => {`  
+            `it('should create plane named DC-10', () => {`  
+                ` expect(new Plane().name = 'DC-10').toEqual('DC-10');`  
+            `});`  
+            `  });`  
+    - since we left ng test running we can see that this test indeed fails. 
+    - Now let's make this a passing test. 
+    - using the prop keyword in VSCode,  in the plane class, I created a property name and It generates the getter and setter for me.
+    - now it's showing me a passing test, woot
+    - Right now i'm seeing one issue that I'm going to get irrated with though,  I'm having to create a new Plane each damn time.   Let's see if there is a way to set something up to run before each test runs.
+    - we'll use the 'before and after' function to create a test bed that wil run before each test. 
+        - first I created a global plane variable of Plane() type
+        - next I created our setup before and after function which will run before each test. It all looks like this:  
         `let plane: Plane;`  
-        `beforeAll(function () {`  
-            `plane = new Plane();`  
-        `});`  
-        `it('should create an instance', () => {`  
-            `expect(plane).toBeTruthy();`  
-        `});`  
-        `it('should create plane named DC-10', () => {`  
-            `expect(plane.name = 'DC-10').toEqual('DC-10');`  
-        `});`  
-        `it('should create plane with manufacturer Boeing', () => {`  
-            `expect(plane.manufacturer = 'Boeing').toEqual('Boeing');`  
-        `});`  
-        `it('should create plane with 10 seats', () => {`  
-            `expect(plane.seats = 10).toEqual(10);`  
-        `});`  
-        `it('should create plane with a range of 1000 miles', () => {`  
-            `expect(plane.range = 1000).toEqual(1000);`  
-        `});`  
-        `it('should create plane with a fuel efficiency of 0', () => {`  
-            `expect(plane.fuelEfficiency = 0).toEqual(0);`  
-        `});`  
-        `it('should create plane with a maintenance rating of 0', () => {`  
-            `expect(plane.maintenance = 0).toEqual(0);`  
-        `});`  
-        `it('should create plane with a production year of 1980', () => {`  
-            `expect(plane.productionYear = '1980').toEqual('1980');`  
-        `});`  
-        `it('should create plane with a price > 1.00', () => {`  
-            `expect(plane.price = 2).toBeGreaterThan(1.00);`  
-        `});`  
-        `});`  
-        
-        So now it's all packed together with a single setup for the plane and then tests the base properties inside the plane.  whew, starting to look cleaner. 
-        
+            `describe('before & after', function () {`
+            `beforeEach(function () {`
+                `plane = new Plane();`
+            `});`
+            `afterEach(function () {`
+            `// clean up`
+            `});`
+            `});`
+            `describe('Plane', () => {`
+            `it('should create an instance', () => {`
+                `expect(new Plane()).toBeTruthy();`
+            `});`
+            `});`
+            `describe('Plane', () => {`
+            `it('should create plane named DC-10', () => {`
+            `  expect(new Plane().name = 'DC-10').toEqual('DC-10');`
+            ` });`
+            `});`
+    - there, that's a little better. So now each test will create run it's set up and break down first.
+    
+6.  Okay, so there's a test and a test model now. I'm going to plug through the Aerobiz manual and fill out the rest of the tests for this. 
+    - First I created the tests for: seats, range, fuel effciency, production year,price, and maintenance,  while running NgTest in the background.  I can see each test fail as I write them. 
+    - Once I have finished creating the tests, I'll go into the plane class and use the prop keyword to build my properties one by one until each test passes
+    - The tests and the model are all simple.  We have no logic in the model nor do we test for anything other than values.  
+7. SOOOO, I fucked up.  I didn't do my test set up and break down correctly. ` expect(plane).toBeTruthy();` I expected to work since in the setup, i'm creating a new Plane() and assigning to plane. turns out that this isn't working.  It turns out that this is scoped to the current describe block, so I've left this intact BUT i've changed my global to `let plane: Plane = new Plane();`  While this gets one object set up and then runs it's tests, I probably should have one test to check for the base plane object creation and have it's set up and tear down inside of it. 
 
-    
-    
+So I undid that change to create the global and then moved all the test cases into the main create plane describe block as such:  
+        `describe('Create Plane', () => {`  
+    `let plane: Plane;`  
+    `beforeAll(function () {`  
+        `plane = new Plane();`  
+    `});`  
+    `it('should create an instance', () => {`  
+        `expect(plane).toBeTruthy();`  
+    `});`  
+    `it('should create plane named DC-10', () => {`  
+        `expect(plane.name = 'DC-10').toEqual('DC-10');`  
+    `});`  
+    `it('should create plane with manufacturer Boeing', () => {`  
+        `expect(plane.manufacturer = 'Boeing').toEqual('Boeing');`  
+    `});`  
+    `it('should create plane with 10 seats', () => {`  
+        `expect(plane.seats = 10).toEqual(10);`  
+    `});`  
+    `it('should create plane with a range of 1000 miles', () => {`  
+        `expect(plane.range = 1000).toEqual(1000);`  
+    `});`  
+    `it('should create plane with a fuel efficiency of 0', () => {`  
+        `expect(plane.fuelEfficiency = 0).toEqual(0);`  
+    `});`  
+    `it('should create plane with a maintenance rating of 0', () => {`  
+        `expect(plane.maintenance = 0).toEqual(0);`  
+    `});`  
+    `it('should create plane with a production year of 1980', () => {`  
+        `expect(plane.productionYear = '1980').toEqual('1980');`  
+    `});`  
+    `it('should create plane with a price > 1.00', () => {`  
+        `expect(plane.price = 2).toBeGreaterThan(1.00);`  
+    `});`  
+    `});`  
+
+    So now it's all packed together with a single setup for the plane and then tests the base properties inside the plane.  whew, starting to look cleaner. 
